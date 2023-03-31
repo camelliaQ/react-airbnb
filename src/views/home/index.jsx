@@ -8,7 +8,7 @@ import HomeSection3 from './components/HomeSection3'
 import { HomeWrapper } from './style'
 
 const Home = memo(() => {
-  const { goodInfo, highInfo, htoInfo, discountInfo, plusInfo } = useSelector(({ home }) => home, shallowEqual)
+  const { goodInfo, highInfo, hotInfo, discountInfo, plusInfo } = useSelector(({ home }) => home, shallowEqual)
 
   const dispatch = useDispatch()
   useEffect(() => {
@@ -20,9 +20,9 @@ const Home = memo(() => {
       <HomeBanner />
         <div className="content">
           {/* 折扣房源 */}
-          <HomeSection2 infoData={discountInfo} />
+          {discountInfo.title && <HomeSection2 infoData={discountInfo} />}
           {/* 热门房源 */}
-          <HomeSection2 infoData={htoInfo} />
+          {hotInfo.title && <HomeSection2 infoData={hotInfo} />}
           {/* 高性价比房源 */}
           {goodInfo.title && <HomeSection infoData={goodInfo} />}
           {/* 高分好评房源 */}

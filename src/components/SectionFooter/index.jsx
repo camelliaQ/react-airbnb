@@ -6,7 +6,7 @@ import { SectionFooterWrapper } from './style'
 const SectionFooter = memo(({ name }) => {
   const moreText = name ? `显示更多${name}房源` : '显示全部'
   return (
-    <SectionFooterWrapper>
+    <SectionFooterWrapper name={name}>
       <div className='more'>
         {moreText}
         <div className='icon'>
