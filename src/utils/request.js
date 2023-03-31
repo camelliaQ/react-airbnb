@@ -4,7 +4,7 @@ class Request {
   constructor(config = {}) {
     this.instance = axios.create(config)
 
-    // 请求拦截器
+    // 请求拦截
     this.instance.interceptors.request.use(
       (req) => {
         return req
@@ -12,7 +12,7 @@ class Request {
       (err) => err
     )
 
-    // 响应拦截器
+    // 响应处理
     this.instance.interceptors.response.use(
       (res) => {
         return res.data
