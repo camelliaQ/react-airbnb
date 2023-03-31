@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const SectionWrapper = styled.div`
+export const SectionWrapper3 = styled.div`
   margin-top: 30px;
   > .content {
     margin: 0 -8px;

@@ -6,6 +6,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const homeSlice = createSlice({
   name: 'home',
   initialState: { 
+    isLoading: true,
     goodInfo: {}, //优质房源
     highInfo: {}, //高分房源
     hotInfo: {}, // 热门房源
@@ -21,6 +22,9 @@ const homeSlice = createSlice({
       state.discountInfo = payload[3]
       state.longforInfo = payload[4]
       state.plusInfo = payload[5]
+    },
+    setLoading(state, { payload }) {
+      state.isLoading = payload
     }
   }
 })
@@ -37,10 +41,11 @@ export const getHomeDataAction = () => async (dispatch) => {
   ]
   const res = await Promise.all(requestArr)
   dispatch(setRoom(res))
+  dispatch(setLoading(false))
 }
 
 // 导出reducer
-export const { setRoom } = homeSlice.actions
+export const { setRoom, setLoading } = homeSlice.actions
 
 export default homeSlice.reducer
 
