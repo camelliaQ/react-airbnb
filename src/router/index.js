@@ -12,11 +12,11 @@ const routes = [
         Component: lazy(() => import('@v/home'))
       },
       {
-        index: '/entire',
+        path: '/entire',
         Component: lazy(() => import('@v/entire'))
       },
       {
-        index: '/detail',
+        path: '/detail',
         Component: lazy(() => import('@/views/detail/style'))
       }
     ]

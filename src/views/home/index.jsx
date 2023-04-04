@@ -10,10 +10,7 @@ import { HomeWrapper } from './style'
 import HomeSection4 from './components/HomeSection4'
 
 const Home = memo(() => {
-  const { goodInfo, highInfo, hotInfo, discountInfo, longforInfo, plusInfo, isLoading } = useSelector(
-    ({ home }) => home,
-    shallowEqual
-  )
+  const { goodInfo, highInfo, hotInfo, discountInfo, longforInfo, plusInfo, isLoading } = useSelector(({ home }) => home, shallowEqual)
 
   const dispatch = useDispatch()
   useEffect(() => {
