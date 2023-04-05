@@ -1,9 +1,24 @@
-import React, { memo } from 'react'
+import { setHeaderConfig } from '@/store/modules/global'
+import React, { memo, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import DetailContent from './components/DetailContent'
+import DetailPictures from './components/DetailPictures'
+import { DetailWrapper } from './style'
 
-const index = memo(() => {
+const Detail = memo(() => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(setHeaderConfig({ isFixed: false }))
+  }, [])
+
   return (
-    <div>index</div>
+    <DetailWrapper>
+      <DetailContent />
+      <DetailPictures />
+    </DetailWrapper>
   )
 })
 
-export default index
+Detail.displayName = 'Detail'
+
+export default Detail

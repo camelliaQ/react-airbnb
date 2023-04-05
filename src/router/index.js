@@ -17,7 +17,7 @@ const routes = [
       },
       {
         path: '/detail',
-        Component: lazy(() => import('@/views/detail/style'))
+        Component: lazy(() => import('@/views/detail'))
       }
     ]
   }

@@ -1,22 +1,95 @@
-import React, { memo } from 'react'
-import { Rate } from 'antd'
+import React, { memo, useRef, useState } from 'react'
+import { Rate, Carousel } from 'antd'
 import PropTypes from 'prop-types'
 import { ItemWrapper } from './style'
+import IconArrowLeft from '@/assets/svg/icon-arrow-left'
+import IconArrowRight from '@/assets/svg/icon-arrow-right'
+import Indicator from '@/base_ui/Indicator'
+import classNames from 'classnames'
 
-const RoomItem = memo(({item, width='25%'}) => {
-  return (
-    <ItemWrapper rateColor={item.star_rating_color} textColor={item.verify_info.text_color} width={width}>
-      <div className='content'>
-        <div className='cover'>
-          <img src={item.picture_url} alt="" />
+const RoomItem = memo(({ item, width = '25%', itemClick }) => {
+  const sliderRef = useRef()
+  const [current, setCurrent] = useState(0)
+
+  const changeSlider = (isRight, event) => {
+    isRight ? sliderRef.current.next() : sliderRef.current.prev()
+    event.stopPropagation()
+  }
+
+  // 单图
+  const PictureEl = (
+    <div className="cover">
+      <img src={item.picture_url} alt="" />
+    </div>
+  )
+
+  // 多图
+  const SlideEl = (
+    <div className="slider">
+      {/* 控制按钮 */}
+      <div className="control">
+        <div className="left" onClick={(e) => changeSlider(false, e)}>
+          <IconArrowLeft width="18" height="18" />
         </div>
-        <div className='desc'>{item.verify_info.messages.join(' · ')}</div>
-        <div className='name mle'>{item.name}</div>
-        <div className='price'>{item.price_format}/晚</div>
-        <div className='bottom'>
-          <Rate className='rate' allowHalf disabled defaultValue={item.star_rating} />
-          <span className='count'>{item.reviews_count}</span>
-          { item.bottom_info && '·' + item.bottom_info.content }
+        <div className="right" onClick={(e) => changeSlider(true, e)}>
+          <IconArrowRight width="18" height="18" />
+        </div>
+      </div>
+
+      {/* 指示器 */}
+      <div className="indicator">
+        <Indicator current={current}>
+          {item.picture_urls?.map((item, index) => (
+            <div
+              className={classNames('item', { active: current === index })}
+              key={item}
+            >
+              <div className="dot"></div>
+            </div>
+          ))}
+        </Indicator>
+      </div>
+
+      {/* 走马灯 */}
+      <Carousel
+        ref={sliderRef}
+        dots={false}
+        beforeChange={(from, to) => setCurrent(to)}
+      >
+        {item.picture_urls?.map((item) => (
+          <div className="cover" key={item}>
+            <img src={item} alt="" />
+          </div>
+        ))}
+      </Carousel>
+    </div>
+  )
+
+  // 跳转方法
+  const goPage = () => {
+    itemClick && itemClick(item)
+  }
+
+  return (
+    <ItemWrapper
+      rateColor={item.star_rating_color}
+      textColor={item.verify_info.text_color}
+      width={width}
+    >
+      <div className="content"  onClick={goPage}>
+        {item.picture_urls ? SlideEl : PictureEl}
+        <div className="desc">{item.verify_info.messages.join(' · ')}</div>
+        <div className="name mle">{item.name}</div>
+        <div className="price">{item.price_format}/晚</div>
+        <div className="bottom">
+          <Rate
+            className="rate"
+            allowHalf
+            disabled
+            defaultValue={item.star_rating}
+          />
+          <span className="count">{item.reviews_count}</span>
+          {item.bottom_info && '·' + item.bottom_info.content}
         </div>
       </div>
     </ItemWrapper>
@@ -25,7 +98,8 @@ const RoomItem = memo(({item, width='25%'}) => {
 
 RoomItem.propTypes = {
   item: PropTypes.object,
-  width: PropTypes.string
+  width: PropTypes.string,
+  itemClick: PropTypes.func
 }
 
 RoomItem.displayName = 'RoomItem'

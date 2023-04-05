@@ -4,8 +4,11 @@ import AppHeader from './components/AppHeader'
 import AppFooter from './components/AppFooter'
 
 import { LayoutWrapper } from './style'
+import useScrollTop from '@/hooks/useScrollTop'
 
 const Layout = memo(() => {
+  useScrollTop()
+  
   return (
     <LayoutWrapper>
       <AppHeader />
