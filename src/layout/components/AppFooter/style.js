@@ -18,7 +18,7 @@ export const FooterWrapper = styled.div`
         margin-bottom: 16px;
         font-weight: 700;
       }
-      .list .item-list {
+      .list .item2 {
         margin-top: 6px;
         color: #767676;
         cursor: pointer;

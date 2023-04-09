@@ -8,14 +8,18 @@ const HeaderRight = memo(() => {
   const [show, setShow] = useState(false)
 
   useEffect(() => {
-    window.addEventListener('click', hiderShow, true)
+    // 改为捕获阶段监听
+    window.addEventListener('click', hideShow, true)
 
-    function hiderShow() {
+    function hideShow() {
       setShow(false)
     }
 
-    return () => window.removeEventListener('click', hiderShow)
+    return () => {
+      window.removeEventListener('click', hideShow)
+    }
   }, [])
+
 
   const panel = (
     <div className='panel'>
@@ -33,23 +37,20 @@ const HeaderRight = memo(() => {
 
   return (
     <RightWrapper>
-      <div className='login-btn'>
+      <div className='btns'>
         <span className='btn'>登录</span>
         <span className='btn'>注册</span>
         <span className='btn'>
           <IconGlobal />
         </span>
       </div>
-
       <div className='profile' onClick={() => setShow(true)}>
         <IconMenu />
         <IconAvatar />
-        { show && panel }
+        {show && panel}
       </div>
     </RightWrapper>
   )
 })
-
-HeaderRight.displayName = 'HeaderRight'
 
 export default HeaderRight

@@ -1,14 +1,13 @@
 import React, { memo, Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
-import AppHeader from './components/AppHeader'
 import AppFooter from './components/AppFooter'
-
+import AppHeader from './components/AppHeader'
 import { LayoutWrapper } from './style'
 import useScrollTop from '@/hooks/useScrollTop'
 
 const Layout = memo(() => {
   useScrollTop()
-  
+
   return (
     <LayoutWrapper>
       <AppHeader />
